@@ -32,8 +32,11 @@ def verify_password(password, verify):
 def verify_email(email):
     email_error = False
     if len(email) > 0:
-        if email.count('@') == 0 or email.count('.') or email.count(' ') > 0:
-            email_error = True
+        if len(email) > 3 and len(email) < 20:
+            if email.count('@') > 0 or email.count('.') > 0 or email.count(' ') > 0:
+                email_error = False
+            else:
+                email_error = True
 
     return email_error
 

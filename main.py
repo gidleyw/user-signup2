@@ -30,41 +30,41 @@ def validate():
     errors = 0
 
     if validate_username(username):
-        username_error = "Usernames required to be between 3-20 alphanumeric characters"
+        username_error = "Username needs to be between 3 and 20 characters"
         errors += 1
     else:
         username_error = ''
     
     if validate_password(password):
-        password_error = "Passwords required to be between 3-20 alphanumeric characters"
+        password_error = "That's not a valid password"
         errors += 1
     else:
         password_error = ''
 
     if verify_password(password,verify):
-        verify_password_error = "Passwords do not match"
+        verify_password_error = "Passwords don't match"
         errors += 1
     else:
         verify_password_error = ''
 
     if verify_email(email):
-        email_error = "Invalid Email address input"
+        email_error = "That's not a valid email"
         errors += 1
     else:
         email_error = ''
 
-    if errors > 0:
-        return redirect('/hello')
+    if errors == 0:
+        user = username
+        return redirect('/hello?user={0}'.format(user))
     else:
-        return template.render(username_error=username_error, password_error=password_error, verify_password_error=verify_password_error, email_error=email_error)
+        return template.render(user=username, email_address=email, username_error=username_error, password_error=password_error, verify_password_error=verify_password_error, email_error=email_error)
 
 @app.route('/hello')
 
 def hello():
-    return "<h1>SUCCESS</h1>"
-    """user = request.args.get(username)
+    user = request.args.get('user')
     template = jinja_env.get_template('validation_return.html')
-    return template.render(user=username)"""
+    return template.render(user=user)
 
 
 
